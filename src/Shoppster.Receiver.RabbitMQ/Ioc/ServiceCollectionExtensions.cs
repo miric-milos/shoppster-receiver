@@ -10,7 +10,16 @@ namespace Shoppster.Receiver.RabbitMQ.Ioc
     {
         public static IServiceCollection AddRabbitMQ(this IServiceCollection services, IConfiguration configuration)
         {
-            var model = new ConnectionFactory { HostName = configuration.GetSection($"{nameof(RabbitMQOptions)}:HostName").Value }
+            var options = configuration.GetSection(nameof(RabbitMQOptions))
+                .Get<RabbitMQOptions>();
+            
+            var model = new ConnectionFactory 
+            {
+                HostName = options.HostName,
+                Port = options.Port,
+                UserName = options.UserName,
+                Password = options.Password
+            }
                 .CreateConnection()
                 .CreateModel();
 

@@ -46,8 +46,8 @@ namespace Shoppster.Receiver.Listener
 
             var message = _messageDeserializer.Deserialize<Product>(e.Body.ToArray());
 
-            _model.BasicAck(e.DeliveryTag, multiple: false);
             Console.WriteLine($"[{DateTime.Now}] Message acknowledged: {JsonConvert.SerializeObject(message)}");
+            _model.BasicAck(e.DeliveryTag, multiple: false);
         }
     }
 }
